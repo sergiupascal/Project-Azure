@@ -65,7 +65,6 @@ resource "azurerm_network_security_rule" "allow_https" {
   destination_address_prefix  = "*"
 }
 
-
 # Create subnet1
 resource "azurerm_subnet" "subnet1" {
   name                 = "subnet1"
