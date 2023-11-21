@@ -1,4 +1,3 @@
-
 resource "azurerm_network_interface" "main" {
   name                = "tfvmex-nic"
   location            = azurerm_resource_group.ProjectAzure.location
