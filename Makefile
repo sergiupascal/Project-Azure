@@ -9,49 +9,59 @@ validate: init
 	terraform validate 
 
 
-ohio-plan: init
-	terraform plan  -var-file envs/us-east-2/ohio.tfvars
+eastus-plan: init
+	terraform plan  -var-file envs/East-US/eastus.tfvars
 
 
-virginia: init
-	terraform workspace new  virginia  || terraform workspace select  virginia   &&  terraform apply --auto-approve  -var-file envs/us-east-1/virginia.tfvars
+centralus: init
+	terraform workspace new  centralus  || terraform workspace select  centralus   &&  terraform apply --auto-approve  -var-file envs/Central-US/centralus.tfvars
 
-ohio: init
-	terraform workspace new  ohio  || terraform workspace select  ohio && terraform apply --auto-approve  -var-file envs/us-east-2/ohio.tfvars
+canadacentral: init
+	terraform workspace new  canadacentral  || terraform workspace select  canadacentral && terraform apply --auto-approve  -var-file envs/Canada-Central/canadacentral.tfvars
 
-california: init
-	terraform workspace new  california  || terraform workspace select  california  && terraform apply --auto-approve  -var-file envs/us-west-1/california.tfvars
+eastus: init
+	terraform workspace new  eastus  || terraform workspace select  eastus  && terraform apply --auto-approve  -var-file envs/East-US/eastus.tfvars
 
-oregon: init
-	terraform workspace new  oregon  || terraform workspace select  oregon && terraform apply --auto-approve  -var-file envs/us-west-2/oregon.tfvars
+eastasia: init
+	terraform workspace new  eastasia  || terraform workspace select  eastasia && terraform apply --auto-approve  -var-file envs/East-Asia/eastasia.tfvars
 
-london: init
-	terraform workspace new  london  || terraform workspace select  london && terraform apply --auto-approve  -var-file envs/eu-west-2/london.tfvars
+northeurope: init
+	terraform workspace new  northeurope  || terraform workspace select  northeurope && terraform apply --auto-approve  -var-file envs/North-Europe/northeurope.tfvars
+
+uksouth: init
+	terraform workspace new  uksouth  || terraform workspace select  uksouth && terraform apply --auto-approve  -var-file envs/UK-South/uksouth.tfvars
+
+westus: init
+	terraform workspace new  westus  || terraform workspace select  westus && terraform apply --auto-approve  -var-file envs/West-US/westus.tfvars
 
 
-virginia-destroy: init
-	terraform workspace new  virginia  || terraform workspace select  virginia && terraform destroy --auto-approve  -var-file envs/us-east-1/virginia.tfvars
+centralus-destroy: init
+	terraform workspace new  centralus  || terraform workspace select  centralus && terraform destroy --auto-approve  -var-file envs/Central-US/centralus.tfvars
 
-ohio-destroy: init
-	terraform workspace new  ohio   || terraform workspace select  ohio  && terraform destroy --auto-approve  -var-file envs/us-east-2/ohio.tfvars
+canadacentral-destroy: init
+	terraform workspace new  canadacentral   || terraform workspace select  canadacentral  && terraform destroy --auto-approve  -var-file envs/Canada-Central/canadacentral.tfvars
 
-california-destroy: init
-	terraform workspace new  california  || terraform workspace select  california && terraform destroy --auto-approve  -var-file envs/us-west-1/california.tfvars
+eastus-destroy: init
+	terraform workspace new  eastus  || terraform workspace select  eastus && terraform destroy --auto-approve  -var-file envs/East-US/eastus.tfvars
 
-oregon-destroy: init
-	terraform workspace new  oregon  || terraform workspace select  oregon && terraform destroy --auto-approve  -var-file envs/us-west-2/oregon.tfvars
+eastasia-destroy: init
+	terraform workspace new  eastasia  || terraform workspace select  eastasia && terraform destroy --auto-approve  -var-file envs/East-Asia/eastasia.tfvars
 
-london-destroy: init
-	terraform workspace new  london  || terraform workspace select  london && terraform destroy --auto-approve  -var-file envs/eu-west-2/london.tfvars
+northeurope-destroy: init
+	terraform workspace new  northeurope  || terraform workspace select  northeurope && terraform destroy --auto-approve  -var-file envs/North-Europe/northeurope.tfvars
+
+uksouth-destroy: init
+	terraform workspace new  uksouth  || terraform workspace select  uksouth && terraform destroy --auto-approve  -var-file envs/UK-South/uksouth.tfvars
+
+westus-destroy: init
+	terraform workspace new  westus  || terraform workspace select  westus && terraform destroy --auto-approve  -var-file envs/West-US/westus.tfvars
 
 
 cleanup:
 	find / -type d  -name ".terraform" -exec rm -rf {} \; 
 
-
-
 all:
-	make ohio && make virginia && make california && make oregon && make london
+	make canadacentral && make centralus && make eastus && make eastasia && make northeurope && make uksouth && make westus
 
 destroy-all:
-	make ohio-destroy && make virginia-destroy && make california-destroy && make oregon-destroy && make london-destroy
+	make canadacentral-destroy && make centralus-destroy && make eastus-destroy && make eastasia-destroy && make northeurope-destroy && make uksouth-destroy && make westus-destroy

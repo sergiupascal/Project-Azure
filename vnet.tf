@@ -1,7 +1,8 @@
 # Create a resource group
 resource "azurerm_resource_group" "ProjectAzure" {
   name     = "ProjectAzure-resources"
-  location = "westus"
+  location = var.location
+  
 }
 
 
