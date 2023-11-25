@@ -2,7 +2,6 @@
 resource "azurerm_resource_group" "ProjectAzure" {
   name     = "ProjectAzure-resources"
   location = var.location
-  
 }
 
 
