@@ -52,7 +52,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "Project" {
   admin_username      = "adminuser"
   admin_password      = "password"
   custom_data         = filebase64("userdata.sh")
-  }
+  
 
   source_image_reference {
     publisher = "Canonical"
