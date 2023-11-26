@@ -6,6 +6,7 @@ Your Responsibility to break in to 3 teams, VPC, Autoscaling, Database
 3. Alexander Safronov
 4. Sergiu Pascal
 5. Tatiana Rotaru
+6. Lazizbek
 
 Step1
 Build terraform module for a Three-Tier application on Azure:

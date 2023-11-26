@@ -43,17 +43,19 @@ resource "azurerm_lb_probe" "example" {
   port            = 8080
 }
 
-resource "azurerm_linux_virtual_machine_scale_set" "example" {
-  name                = "example-vmss"
-  resource_group_name = azurerm_resource_group.example.name
-  location            = azurerm_resource_group.example.location
+resource "azurerm_linux_virtual_machine_scale_set" "Project" {
+  name                = "Project-vmss"
+  resource_group_name = azurerm_resource_group.ProjectAzure.name
+  location            = azurerm_resource_group.ProjectAzure.location
   sku                 = "Standard_F2"
   instances           = 1
   admin_username      = "adminuser"
-
   admin_ssh_key {
     username   = "adminuser"
     public_key = file("~/.ssh/id_rsa.pub")
+  custom_data                     = filebase64("userdata.sh")
+  health_probe_id                 = azurerm_lb_probe.http.id
+  disable_password_authentication = false
   }
 
   source_image_reference {
@@ -75,7 +77,11 @@ resource "azurerm_linux_virtual_machine_scale_set" "example" {
     ip_configuration {
       name      = "internal"
       primary   = true
-      subnet_id = azurerm_subnet.internal.id
+      subnet_id = [ 
+        azurerm_subnet.subnet1.id,
+        azurerm_subnet.subnet2.id,
+        azurerm_subnet.subnet3.id
+      ]
     }
   }
 }

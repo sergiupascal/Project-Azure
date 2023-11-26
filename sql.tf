@@ -6,13 +6,13 @@ resource "random_string" "random" {
 }
 
 
-resource "azurerm_mysql_server" "example" {
-  name                = "example-mysqlserver-2-${random_string.random.result}"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+resource "azurerm_mysql_server" "ProjectWordpress" {
+  name                = "ProjectWordpress-${random_string.random.result}"
+  location            = azurerm_resource_group.ProjectAzure.location
+  resource_group_name = azurerm_resource_group.ProjectAzure.name
 
-  administrator_login          = "mysqladminun"
-  administrator_login_password = "H@Sh1CoR3!"
+  administrator_login          = "mysqladmin"
+  administrator_login_password = "H@ShiCORP!"
 
   sku_name   = "B_Gen5_2"
   storage_mb = 5120
