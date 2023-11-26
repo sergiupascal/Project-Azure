@@ -3,7 +3,7 @@ resource "azurerm_public_ip" "project-ip" {
   location            = azurerm_resource_group.ProjectAzure.location
   resource_group_name = azurerm_resource_group.ProjectAzure.name
   allocation_method   = "Static"
-  domain_name_label   = azurerm_resource_group.ProjectAzure.name
+  domain_name_label   = azurerm_resource_group.projectazure.name
 
   tags = {}
 }
