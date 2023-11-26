@@ -50,12 +50,8 @@ resource "azurerm_linux_virtual_machine_scale_set" "Project" {
   sku                 = "Standard_F2"
   instances           = 1
   admin_username      = "adminuser"
-  admin_ssh_key {
-    username   = "adminuser"
-    public_key = file("~/.ssh/id_rsa.pub")
-  custom_data                     = filebase64("userdata.sh")
-  health_probe_id                 = azurerm_lb_probe.http.id
-  disable_password_authentication = false
+  admin_password      = "password"
+  custom_data         = filebase64("userdata.sh")
   }
 
   source_image_reference {
@@ -78,9 +74,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "Project" {
       name      = "internal"
       primary   = true
       subnet_id = [ 
-        azurerm_subnet.subnet1.id,
-        azurerm_subnet.subnet2.id,
-        azurerm_subnet.subnet3.id
+        azurerm_subnet.subnet1.id[0],
+        azurerm_subnet.subnet2.id[1],
+        azurerm_subnet.subnet3.id[2]
       ]
     }
   }
