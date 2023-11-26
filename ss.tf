@@ -50,7 +50,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "Project" {
   sku                 = "Standard_F2"
   instances           = 1
   admin_username      = "adminuser"
-  admin_password      = "password"
+  admin_password      = "pa$$w0rd"
   custom_data         = filebase64("userdata.sh")
   health_probe_id                 = azurerm_lb_probe.example.id
   disable_password_authentication = false
