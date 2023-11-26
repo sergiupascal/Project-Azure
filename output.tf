@@ -1,3 +1,3 @@
 output "vnet_id" {
-  value = azurerm_virtual_network.ProjectAzure.id
+  value = azurerm_virtual_network.projectazure.id
 }

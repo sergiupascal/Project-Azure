@@ -6,10 +6,10 @@ resource "random_string" "random" {
 }
 
 
-resource "azurerm_mysql_server" "ProjectWordpress" {
-  name                = "ProjectWordpress-${random_string.random.result}"
-  location            = azurerm_resource_group.ProjectAzure.location
-  resource_group_name = azurerm_resource_group.ProjectAzure.name
+resource "azurerm_mysql_server" "projectwordpress" {
+  name                = "projectwordpress-${random_string.random.result}"
+  location            = azurerm_resource_group.projectazure.location
+  resource_group_name = azurerm_resource_group.projectazure.name
 
   administrator_login          = "mysqladmin"
   administrator_login_password = "H@ShiCORP!"

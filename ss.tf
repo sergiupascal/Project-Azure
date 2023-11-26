@@ -1,7 +1,7 @@
 resource "azurerm_public_ip" "project-ip" {
   name                = "test"
-  location            = azurerm_resource_group.ProjectAzure.location
-  resource_group_name = azurerm_resource_group.ProjectAzure.name
+  location            = azurerm_resource_group.projectazure.location
+  resource_group_name = azurerm_resource_group.projectazure.name
   allocation_method   = "Static"
   domain_name_label   = azurerm_resource_group.projectazure.name
 
@@ -10,8 +10,8 @@ resource "azurerm_public_ip" "project-ip" {
 
 resource "azurerm_lb" "project-lb" {
   name                = "test"
-  location            = azurerm_resource_group.ProjectAzure.location
-  resource_group_name = azurerm_resource_group.ProjectAzure.name
+  location            = azurerm_resource_group.projectazure.location
+  resource_group_name = azurerm_resource_group.projectazure.name
 
   frontend_ip_configuration {
     name                 = "PublicIPAddress"
@@ -25,7 +25,7 @@ resource "azurerm_lb_backend_address_pool" "bpepool" {
 }
 
 resource "azurerm_lb_nat_pool" "lbnatpool" {
-  resource_group_name            = azurerm_resource_group.ProjectAzure.name
+  resource_group_name            = azurerm_resource_group.projectazure.name
   name                           = "ssh"
   loadbalancer_id                = azurerm_lb.project-lb.id
   protocol                       = "Tcp"
@@ -45,8 +45,8 @@ resource "azurerm_lb_probe" "example" {
 
 resource "azurerm_linux_virtual_machine_scale_set" "Project" {
   name                = "Project-vmss"
-  resource_group_name = azurerm_resource_group.ProjectAzure.name
-  location            = azurerm_resource_group.ProjectAzure.location
+  resource_group_name = azurerm_resource_group.projectazure.name
+  location            = azurerm_resource_group.projectazure.location
   sku                 = "Standard_F2"
   instances           = 1
   admin_username      = "adminuser"
