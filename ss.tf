@@ -73,11 +73,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "Project" {
     ip_configuration {
       name      = "internal"
       primary   = true
-      subnet_id = [ 
-        azurerm_subnet.subnet1.id[0],
-        azurerm_subnet.subnet2.id[1],
-        azurerm_subnet.subnet3.id[2]
-      ]
+      subnet_id = azurerm_subnet.subnet1.id
     }
   }
 }
