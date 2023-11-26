@@ -52,7 +52,8 @@ resource "azurerm_linux_virtual_machine_scale_set" "Project" {
   admin_username      = "adminuser"
   admin_password      = "password"
   custom_data         = filebase64("userdata.sh")
-  
+  health_probe_id                 = azurerm_lb_probe.example.id
+  disable_password_authentication = false
 
   source_image_reference {
     publisher = "Canonical"
