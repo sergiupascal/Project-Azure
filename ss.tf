@@ -58,6 +58,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "project-vmss" {
   admin_username                  = "adminuser"
   admin_password                  = "P@ssw0rd1234!"
   disable_password_authentication = false
+  custom_data                     = filebase64("userdata.sh")
   health_probe_id                 = azurerm_lb_probe.lbprobe.id
   upgrade_mode                    = "Rolling"
 
