@@ -26,3 +26,11 @@ resource "azurerm_mysql_server" "projectwordpress" {
   ssl_enforcement_enabled           = true
   ssl_minimal_tls_version_enforced  = "TLS1_2"
 }
+
+resource "azurerm_mysql_database" "project-db-wordpress" {
+  name                = "project-db"
+  resource_group_name = azurerm_resource_group.projectazure.name
+  server_name         = azurerm_mysql_server.projectwordpress.name
+  charset             = "utf8"
+  collation           = "utf8_unicode_ci"
+}

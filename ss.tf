@@ -1,5 +1,5 @@
-resource "azurerm_public_ip" "project-ip" {
-  name                = "test"
+resource "azurerm_public_ip" "project-public-ip" {
+  name                = "public-ip"
   location            = azurerm_resource_group.projectazure.location
   resource_group_name = azurerm_resource_group.projectazure.name
   allocation_method   = "Static"
@@ -9,13 +9,13 @@ resource "azurerm_public_ip" "project-ip" {
 }
 
 resource "azurerm_lb" "project-lb" {
-  name                = "test"
+  name                = "project-lb"
   location            = azurerm_resource_group.projectazure.location
   resource_group_name = azurerm_resource_group.projectazure.name
 
   frontend_ip_configuration {
     name                 = "PublicIPAddress"
-    public_ip_address_id = azurerm_public_ip.project-ip.id
+    public_ip_address_id = azurerm_public_ip.project-public-ip.id
   }
 }
 
@@ -35,7 +35,7 @@ resource "azurerm_lb_nat_pool" "lbnatpool" {
   frontend_ip_configuration_name = "PublicIPAddress"
 }
 
-resource "azurerm_lb_probe" "example" {
+resource "azurerm_lb_probe" "lbprobe" {
   loadbalancer_id = azurerm_lb.project-lb.id
   name            = "http-probe"
   protocol        = "Http"
@@ -43,22 +43,22 @@ resource "azurerm_lb_probe" "example" {
   port            = 8080
 }
 
-resource "azurerm_linux_virtual_machine_scale_set" "Project" {
-  name                = "Project-vmss"
+resource "azurerm_linux_virtual_machine_scale_set" "project-vmss" {
+  name                = "project-vmss"
   resource_group_name = azurerm_resource_group.projectazure.name
   location            = azurerm_resource_group.projectazure.location
   sku                 = "Standard_F2"
-  instances           = 1
+  instances           = 2
   admin_username      = "adminuser"
   admin_password      = "pa$$w0rd"
   custom_data         = filebase64("userdata.sh")
-  health_probe_id                 = azurerm_lb_probe.example.id
+  health_probe_id                 = azurerm_lb_probe.lbprobe.id
   disable_password_authentication = false
 
   source_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts"
+    publisher = "OpenLogic"
+    offer     = "CentOS"
+    sku       = "7_9"
     version   = "latest"
   }
 
@@ -70,11 +70,22 @@ resource "azurerm_linux_virtual_machine_scale_set" "Project" {
   network_interface {
     name    = "example"
     primary = true
+    network_security_group_id = azurerm_network_security_group.project-nsg.id
 
     ip_configuration {
-      name      = "internal"
+      name      = "internal1"
       primary   = true
       subnet_id = azurerm_subnet.subnet1.id
+    }
+    ip_configuration {
+        name      = "internal2"
+        primary   = true
+        subnet_id = azurerm_subnet.subnet2.id
+    }
+    ip_configuration {
+      name      = "internal3"
+      primary   = true
+      subnet_id = azurerm_subnet.subnet3.id
     }
   }
 }
