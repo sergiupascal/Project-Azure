@@ -35,7 +35,13 @@ resource "azurerm_lb_nat_pool" "lbnatpool" {
   frontend_ip_configuration_name = "PublicIPAddress"
 }
 
-
+resource "azurerm_lb_probe" "lbprobe" {
+  loadbalancer_id = azurerm_lb.project-lb.id
+  name            = "http-probe"
+  protocol        = "Http"
+  request_path    = "/health"
+  port            = 8080
+}
 
 resource "azurerm_virtual_machine_scale_set" "project-ss" {
   name                = "project-scaleset"
