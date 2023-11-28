@@ -53,6 +53,9 @@ resource "azurerm_virtual_machine_scale_set" "project-ss" {
     pause_time_between_batches              = "PT0S"
   }
 
+  # required when using rolling upgrade policy
+  health_probe_id = azurerm_lb_probe.lbprobe.id
+
   sku {
     name     = "Standard_F2"
     tier     = "Standard"
