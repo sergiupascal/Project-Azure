@@ -41,10 +41,9 @@ resource "azurerm_lb_probe" "lbprobe" {
 
 resource "azurerm_lb_rule" "lbrule" {
   name                           = "lb-rule"
-  resource_group_name            = azurerm_resource_group.projectazure.name
   loadbalancer_id                = azurerm_lb.project-lb.id
   probe_id                       = azurerm_lb_probe.lbprobe.id
-  backend_address_pool_id        = azurerm_lb_backend_address_pool.bpepool.id
+  backend_address_pool_ids        = azurerm_lb_backend_address_pool.bpepool.id
   frontend_ip_configuration_name = "internal"
   protocol                       = "Tcp"
   frontend_port                  = 22
