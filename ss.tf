@@ -35,13 +35,7 @@ resource "azurerm_lb_nat_pool" "lbnatpool" {
   frontend_ip_configuration_name = "PublicIPAddress"
 }
 
-resource "azurerm_lb_probe" "lbprobe" {
-  loadbalancer_id = azurerm_lb.project-lb.id
-  name            = "http-probe"
-  protocol        = "Http"
-  request_path    = "/health"
-  port            = 8080
-}
+
 
 resource "azurerm_virtual_machine_scale_set" "project-ss" {
   name                = "project-scaleset"
@@ -58,9 +52,6 @@ resource "azurerm_virtual_machine_scale_set" "project-ss" {
     max_unhealthy_upgraded_instance_percent = 5
     pause_time_between_batches              = "PT0S"
   }
-
-  # required when using rolling upgrade policy
-  health_probe_id = azurerm_lb_probe.lbprobe.id
 
   sku {
     name     = "Standard_F2"
