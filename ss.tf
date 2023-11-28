@@ -21,17 +21,6 @@ resource "azurerm_lb_backend_address_pool" "bpepool" {
   loadbalancer_id     = azurerm_lb.project-lb.id
 }
 
-resource "azurerm_lb_nat_pool" "lbnatpool" {
-  name                           = "nat-pool"
-  resource_group_name            = azurerm_resource_group.projectazure.name
-  loadbalancer_id                = azurerm_lb.project-lb.id
-  frontend_ip_configuration_name = "internal"
-  protocol                       = "Tcp"
-  frontend_port_start            = 80
-  frontend_port_end              = 90
-  backend_port                   = 8080
-}
-
 resource "azurerm_lb_probe" "http" {
   name                = "lb-probe"
   loadbalancer_id     = azurerm_lb.project-lb.id
@@ -67,9 +56,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "project-vmss" {
   upgrade_mode                    = "Rolling"
 
   source_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts"
+    publisher = "OpenLogic"
+    offer     = "CentOS"
+    sku       = "7_9-gen2"
     version   = "latest"
   }
 
@@ -87,7 +76,6 @@ resource "azurerm_linux_virtual_machine_scale_set" "project-vmss" {
       primary                                = true
       subnet_id                              = azurerm_subnet.subnet1.id
       load_balancer_backend_address_pool_ids = [azurerm_lb_backend_address_pool.bpepool.id]
-      load_balancer_inbound_nat_rules_ids    = [azurerm_lb_nat_pool.lbnatpool.id]
     }
   }
 
