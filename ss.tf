@@ -1,5 +1,5 @@
 resource "azurerm_public_ip" "project-public-ip" {
-  name                = "publicip"
+  name                = "public-ip"
   location            = azurerm_resource_group.projectazure.location
   resource_group_name = azurerm_resource_group.projectazure.name
   allocation_method   = "Static"
@@ -32,21 +32,25 @@ resource "azurerm_lb_nat_pool" "lbnatpool" {
   backend_port                   = 8080
 }
 
-resource "azurerm_lb_probe" "lbprobe" {
+resource "azurerm_lb_probe" "http" {
   name                = "lb-probe"
   loadbalancer_id     = azurerm_lb.project-lb.id
-  port                = 22
-  protocol            = "Tcp"
+  port                = 80
+  protocol            = "Http"
+  request_path        = "/index.html"
+  number_of_probes    = 3
+  interval_in_seconds = 5
 }
 
 resource "azurerm_lb_rule" "lbrule" {
   name                           = "lb-rule"
   loadbalancer_id                = azurerm_lb.project-lb.id
-  probe_id                       = azurerm_lb_probe.lbprobe.id
+  probe_id                       = azurerm_lb_probe.http.id
   frontend_ip_configuration_name = "internal"
   protocol                       = "Tcp"
-  frontend_port                  = 22
-  backend_port                   = 22
+  frontend_port                  = 80
+  backend_port                   = 80
+  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.bpepool.id]
 }
 
 resource "azurerm_linux_virtual_machine_scale_set" "project-vmss" {
@@ -59,7 +63,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "project-vmss" {
   admin_password                  = "P@ssw0rd1234!"
   disable_password_authentication = false
   custom_data                     = filebase64("userdata.sh")
-  health_probe_id                 = azurerm_lb_probe.lbprobe.id
+  health_probe_id                 = azurerm_lb_probe.http.id
   upgrade_mode                    = "Rolling"
 
   source_image_reference {
