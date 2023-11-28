@@ -73,16 +73,6 @@ resource "azurerm_linux_virtual_machine_scale_set" "project-vmss" {
     network_security_group_id = azurerm_network_security_group.project-nsg.id
 
     ip_configuration {
-      name      = "internal1"
-      primary   = true
-      subnet_id = azurerm_subnet.subnet1.id
-    }
-    ip_configuration {
-        name      = "internal2"
-        primary   = true
-        subnet_id = azurerm_subnet.subnet2.id
-    }
-    ip_configuration {
       name      = "internal3"
       primary   = true
       subnet_id = azurerm_subnet.subnet3.id
