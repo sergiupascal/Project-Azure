@@ -13,9 +13,12 @@ sudo systemctl enable httpd
 sudo yum install wget unzip -y
 
 # Download and extract website template
-wget https://www.free-css.com/assets/files/free-css-templates/download/page296/little-fashion.zip
-unzip little-fashion.zip
-mv little-fashion-html/* /var/www/html/
+#wget https://www.free-css.com/assets/files/free-css-templates/download/page296/little-fashion.zip
+#unzip little-fashion.zip
+#mv little-fashion-html/* /var/www/html/
+wget https://www.free-css.com/assets/files/free-css-templates/download/page296/finexo.zip
+unzip finexo.zip
+mv finexo-html/* /var/www/html/
 
 # Install PHP 7.3
 sudo yum install epel-release yum-utils -y
