@@ -13,7 +13,7 @@ provider "aws" {
 
 # AWS Route 53
 resource "aws_route53_record" "projectwordpressdb" {
-  zone_id = ""
+  zone_id = "Z0615925204BZEU02R481"
   name    = "wordpress.net"
   type    = "A"
   ttl     = 300
