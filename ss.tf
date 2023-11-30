@@ -69,13 +69,13 @@ resource "azurerm_lb_rule" "ssh" {
 }
 
 # Traffic Manager Profile for Load Balancing
-resource "azurerm_traffic_manager_profile" "projectmanager" {
-  name                   = "traffic-manager"
+resource "azurerm_traffic_manager_profile" "traffic_profile8250" {
+  name                   = "traffic_profile8250"
   resource_group_name    = azurerm_resource_group.projectazure.name
   traffic_routing_method = "Priority"
 
   dns_config {
-    relative_name = "traffic-manager"
+    relative_name = "traffic_profile8250"
     ttl           = 100
   }
 
@@ -92,7 +92,7 @@ resource "azurerm_traffic_manager_profile" "projectmanager" {
 # End-Point for Traffic Manager
 resource "azurerm_traffic_manager_azure_endpoint" "endpoint" {
   name               = "endpoint"
-  profile_id         = azurerm_traffic_manager_profile.projectmanager.id
+  profile_id         = azurerm_traffic_manager_profile.traffic_profile8250.id
   weight             = 100
   target_resource_id = azurerm_public_ip.project-public-ip.id
 }
