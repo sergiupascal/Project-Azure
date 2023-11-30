@@ -26,21 +26,21 @@ sudo yum install php php-mcrypt php-cli php-gd php-curl php-mysql php-ldap php-z
 sudo systemctl restart httpd
 
 # Install Wordpress
-#sudo wget https://en-gb.wordpress.org/latest-en_GB.tar.gz
-#sudo tar -xf latest-en_GB.tar.gz -C /var/www/html/
-#sudo cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
-#sudo chown -R apache:apache /var/www/html/
-
 sudo wget https://en-gb.wordpress.org/latest-en_GB.tar.gz 
 sudo tar -xf latest-en_GB.tar.gz 
 sudo rm -rf /var/www/html/* 
 sudo mv wordpress/* /var/www/html/ 
 sudo chown -R  apache:apache  /var/www/html 
-yum install php-mysqli -y 
-systemctl restart httpd 
+sudo yum install php-mysqli -y 
+sudo systemctl restart httpd 
 
 # Install MYSQL Maria DB Server 
 sudo yum install mariadb mariadb-server -y 
 sudo systemctl start mariadb  
 sudo systemctl enable mariadb 
 sudo mysql_secure_installation  
+
+# Configure wp-config.php with the database details
+sed -i -e "s/database_name_here/project-db/" /var/www/html/wp-config.php
+sed -i -e "s/username_here/mysqladmin/" /var/www/html/wp-config.php
+sed -i -e "s/password_here/H@ShiCORP!/" /var/www/html/wp-config.php
