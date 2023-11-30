@@ -116,3 +116,9 @@ resource "azurerm_network_security_rule" "allow_https" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
 }
+
+# Network Security Group & Subnet #3 Association
+resource "azurerm_subnet_network_security_group_association" "project-nsg-sub" {
+  subnet_id                 = azurerm_subnet.subnet3.id
+  network_security_group_id = azurerm_network_security_group.project-nsg.id
+}
