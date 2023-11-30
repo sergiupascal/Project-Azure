@@ -146,6 +146,6 @@ resource "azurerm_virtual_network_gateway" "project-igw" {
     name                          = "vnetGatewayConfig"
     public_ip_address_id          = azurerm_public_ip.project-igw-ip.id
     private_ip_address_allocation = "Dynamic"
-    subnet_id                     = azurerm_subnet.subnet2.id
+    subnet_id                     = azurerm_subnet.subnet3.id
   }
 }
