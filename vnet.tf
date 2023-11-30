@@ -13,6 +13,31 @@ resource "azurerm_virtual_network" "projectazure-vnet" {
   address_space       = ["10.0.0.0/16"]
 }
 
+# Create subnet1
+resource "azurerm_subnet" "subnet1" {
+  name                 = "subnet1"
+  resource_group_name  = azurerm_resource_group.projectazure.name
+  virtual_network_name = azurerm_virtual_network.projectazure-vnet.name
+  address_prefixes     = ["10.0.1.0/24"]
+}
+
+# Create subnet2
+resource "azurerm_subnet" "subnet2" {
+  name                 = "subnet2"
+  resource_group_name  = azurerm_resource_group.projectazure.name
+  virtual_network_name = azurerm_virtual_network.projectazure-vnet.name
+  address_prefixes     = ["10.0.2.0/24"]
+}
+
+# Create subnet3
+resource "azurerm_subnet" "subnet3" {
+  name                 = "subnet3"
+  resource_group_name  = azurerm_resource_group.projectazure.name
+  virtual_network_name = azurerm_virtual_network.projectazure-vnet.name
+  address_prefixes     = ["10.0.3.0/24"]
+}
+
+
 # Create a network security group
 resource "azurerm_network_security_group" "project-nsg" {
   name                = "project-nsg"
@@ -31,6 +56,21 @@ resource "azurerm_network_security_rule" "allow_ssh" {
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "22"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+}
+
+# Allow inbound HTTP (port 80) traffic
+resource "azurerm_network_security_rule" "allow_http" {
+  name                        = "allow-http"
+  priority                    = 1004
+  direction                   = "Inbound"
+  resource_group_name         = azurerm_resource_group.projectazure.name
+  network_security_group_name = azurerm_network_security_group.project-nsg.name
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "80"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
 }
@@ -63,28 +103,4 @@ resource "azurerm_network_security_rule" "allow_https" {
   destination_port_range      = "443"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-}
-
-# Create subnet1
-resource "azurerm_subnet" "subnet1" {
-  name                 = "subnet1"
-  resource_group_name  = azurerm_resource_group.projectazure.name
-  virtual_network_name = azurerm_virtual_network.projectazure-vnet.name
-  address_prefixes     = ["10.0.1.0/24"]
-}
-
-# Create subnet2
-resource "azurerm_subnet" "subnet2" {
-  name                 = "subnet2"
-  resource_group_name  = azurerm_resource_group.projectazure.name
-  virtual_network_name = azurerm_virtual_network.projectazure-vnet.name
-  address_prefixes     = ["10.0.2.0/24"]
-}
-
-# Create subnet3
-resource "azurerm_subnet" "subnet3" {
-  name                 = "subnet3"
-  resource_group_name  = azurerm_resource_group.projectazure.name
-  virtual_network_name = azurerm_virtual_network.projectazure-vnet.name
-  address_prefixes     = ["10.0.3.0/24"]
 }
