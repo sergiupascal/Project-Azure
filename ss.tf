@@ -70,7 +70,7 @@ resource "azurerm_lb_rule" "ssh" {
 
 # Traffic Manager Profile for Load Balancing
 resource "azurerm_traffic_manager_profile" "project-manager" {
-  name                   = "traffic-manager-azure1"
+  name                   = "traffic-manager-${var.location}"
   resource_group_name    = azurerm_resource_group.projectazure.name
   traffic_routing_method = "Priority"
 
