@@ -1,10 +1,13 @@
+# Public IP for Load Balancer
 resource "azurerm_public_ip" "project-public-ip" {
   name                = "public-ip"
   location            = azurerm_resource_group.projectazure.location
   resource_group_name = azurerm_resource_group.projectazure.name
   allocation_method   = "Static"
+  domain_name_label   = azurerm_resource_group.projectazure.name
 }
 
+# Create Load Balancer Front-End
 resource "azurerm_lb" "project-lb" {
   name                = "lb"
   location            = azurerm_resource_group.projectazure.location
@@ -16,11 +19,13 @@ resource "azurerm_lb" "project-lb" {
   }
 }
 
+# Create Load Balancer Back-End Address Pool
 resource "azurerm_lb_backend_address_pool" "bpepool" {
   name                = "backend-pool"
   loadbalancer_id     = azurerm_lb.project-lb.id
 }
 
+# Create Load Balancer Probe HTTP
 resource "azurerm_lb_probe" "http" {
   name                = "lb-probe"
   loadbalancer_id     = azurerm_lb.project-lb.id
