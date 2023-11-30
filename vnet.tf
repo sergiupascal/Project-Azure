@@ -1,6 +1,6 @@
 # Create a resource group
 resource "azurerm_resource_group" "projectazure" {
-  name     = "projectazure-resources"
+  name     = "projectazure-${var.location}"
   location = var.location
 }
 
