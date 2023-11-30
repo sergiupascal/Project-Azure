@@ -37,6 +37,18 @@ resource "azurerm_subnet" "subnet3" {
   address_prefixes     = ["10.0.3.0/24"]
 }
 
+# Create Virtual Network Interface
+resource "azurerm_network_interface" "project-nic" {
+  name                = "example-nic"
+  location            = azurerm_resource_group.projectazure.location
+  resource_group_name = azurerm_resource_group.projectazure.name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.subnet3.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
 
 # Create a network security group
 resource "azurerm_network_security_group" "project-nsg" {
