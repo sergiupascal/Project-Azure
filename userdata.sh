@@ -15,7 +15,7 @@ sudo yum install wget unzip -y
 # Download and extract website template
 wget https://www.free-css.com/assets/files/free-css-templates/download/page296/little-fashion.zip
 unzip little-fashion.zip
-mv 2127_little_fashion/*  > /var/www/html/
+mv 2127_little_fashion/*   /var/www/html/
 #wget https://www.free-css.com/assets/files/free-css-templates/download/page296/finexo.zip
 #unzip finexo.zip
 #mv finexo-html/* /var/www/html/
