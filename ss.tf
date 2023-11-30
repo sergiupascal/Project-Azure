@@ -68,6 +68,38 @@ resource "azurerm_lb_rule" "ssh" {
   
 }
 
+# Traffic Manager Profile for Load Balancing
+resource "azurerm_traffic_manager_profile" "projectmanager" {
+  name                   = "traffic-manager"
+  resource_group_name    = azurerm_resource_group.projectazure.name
+  traffic_routing_method = "Priority"
+
+  dns_config {
+    relative_name = "traffic-manager"
+    ttl           = 100
+  }
+
+  monitor_config {
+    protocol                     = "HTTP"
+    port                         = 80
+    path                         = "/"
+    interval_in_seconds          = 30
+    timeout_in_seconds           = 9
+    tolerated_number_of_failures = 3
+  }
+}
+
+# End-Point for Traffic Manager
+resource "azurerm_traffic_manager_azure_endpoint" "endpoint" {
+  name               = "endpoint"
+  profile_id         = azurerm_traffic_manager_profile.projectmanager.id
+  weight             = 100
+  target_resource_id = azurerm_public_ip.project-public-ip.id
+}
+
+#######################################################################################
+
+# Create Virtual Machine Scale Set
 resource "azurerm_linux_virtual_machine_scale_set" "project-vmss" {
   name                            = "vmss"
   resource_group_name             = azurerm_resource_group.projectazure.name
