@@ -128,11 +128,12 @@ resource "azurerm_linux_virtual_machine_scale_set" "project-vmss" {
   network_interface {
     name    = "example"
     primary = true
+    network_security_group_id = azurerm_network_security_group.project-nsg.id
 
     ip_configuration {
       name                                   = "internal"
       primary                                = true
-      subnet_id                              = azurerm_subnet.subnet1.id
+      subnet_id                              = azurerm_subnet.subnet3.id
       load_balancer_backend_address_pool_ids = [azurerm_lb_backend_address_pool.bpepool.id]
     }
   }
@@ -144,5 +145,5 @@ resource "azurerm_linux_virtual_machine_scale_set" "project-vmss" {
     pause_time_between_batches              = "PT30S"
   }
 
-  depends_on = [azurerm_lb_rule.lbrule]
+  depends_on = [azurerm_lb_rule.lbrule-http]
 }
