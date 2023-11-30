@@ -27,13 +27,20 @@ resource "azurerm_lb_backend_address_pool" "bpepool" {
 
 # Create Load Balancer Probe HTTP
 resource "azurerm_lb_probe" "http" {
-  name                = "lb-probe"
+  name                = "lb-probe-http"
   loadbalancer_id     = azurerm_lb.project-lb.id
   port                = 80
   protocol            = "Http"
   request_path        = "/index.html"
   number_of_probes    = 3
   interval_in_seconds = 5
+}
+
+# Create Load Balancer  Probe  SSH
+resource "azurerm_lb_probe" "ssh" {
+  name                = "lb-probe-ssh"
+  loadbalancer_id     = azurerm_lb.project-lb.id
+  port                = 22
 }
 
 resource "azurerm_lb_rule" "lbrule" {
