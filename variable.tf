@@ -1,4 +1,4 @@
 variable "location" {}
 variable "zoneid" {}
-variable "acceskey" {}
+variable "accesskey" {}
 variable "secretkey" {}
