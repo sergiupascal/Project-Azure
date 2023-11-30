@@ -75,7 +75,7 @@ resource "azurerm_traffic_manager_profile" "project-manager" {
   traffic_routing_method = "Priority"
 
   dns_config {
-    relative_name = "traffic-manager-azure1"
+    relative_name = "traffic-manager-${var.location}"
     ttl           = 100
   }
 
