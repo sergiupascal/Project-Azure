@@ -7,13 +7,13 @@ provider "azurerm" {
 # Configure the AWS account
 provider "aws" {
   region     = "us-east-1"
-  access_key = ""
-  secret_key = ""
+  access_key = var.accesskey
+  secret_key = var.secretkey
 }
 
 # AWS Route 53
 resource "aws_route53_record" "projectwordpressdb" {
-  zone_id = "Z0615925204BZEU02R481"
+  zone_id = var.zoneid
   name    = "wordpress.net"
   type    = "A"
   ttl     = 300
