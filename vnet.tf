@@ -122,3 +122,30 @@ resource "azurerm_subnet_network_security_group_association" "project-nsg-sub" {
   subnet_id                 = azurerm_subnet.subnet3.id
   network_security_group_id = azurerm_network_security_group.project-nsg.id
 }
+
+# Public IP for Internet Gateway
+resource "azurerm_public_ip" "project-igw-ip" {
+  name                = "IGW-IP"
+  location            = azurerm_resource_group.projectazure.location
+  resource_group_name = azurerm_resource_group.projectazure.name
+  allocation_method   = "Dynamic"
+}
+
+# Internet Gateway
+resource "azurerm_virtual_network_gateway" "project-igw" {
+  name                = "IGW"
+  location            = azurerm_resource_group.projectazure.location
+  resource_group_name = azurerm_resource_group.projectazure.name
+  type     = "Vpn"
+  vpn_type = "RouteBased"
+  active_active = false
+  enable_bgp    = false
+  sku           = "Basic"
+
+  ip_configuration {
+    name                          = "vnetGatewayConfig"
+    public_ip_address_id          = azurerm_public_ip.project-igw-ip.id
+    private_ip_address_allocation = "Dynamic"
+    subnet_id                     = azurerm_subnet.subnet2.id
+  }
+}
