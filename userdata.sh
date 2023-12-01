@@ -5,7 +5,7 @@ sudo getenforce
 sudo setenforce 0
 
 # Install Apache
-sudo yum install httpd mysql -y
+sudo yum install httpd  -y
 sudo systemctl start httpd
 sudo systemctl enable httpd
 
