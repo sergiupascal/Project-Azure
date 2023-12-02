@@ -111,7 +111,6 @@ resource "azurerm_linux_virtual_machine_scale_set" "project-vmss" {
   disable_password_authentication = false
   custom_data                     = filebase64("userdata.sh")
   health_probe_id                 = azurerm_lb_probe.http.id
-  #upgrade_mode                    = "Rolling"
 
   source_image_reference {
     publisher = "OpenLogic"
@@ -137,13 +136,4 @@ resource "azurerm_linux_virtual_machine_scale_set" "project-vmss" {
       load_balancer_backend_address_pool_ids = [azurerm_lb_backend_address_pool.bpepool.id]
     }
   }
-
-  #rolling_upgrade_policy {
-  #  max_batch_instance_percent              = 21
-  #  max_unhealthy_instance_percent          = 22
-  #  max_unhealthy_upgraded_instance_percent = 23
-  #  pause_time_between_batches              = "PT30S"
-  #}
-#
- # depends_on = [azurerm_lb_rule.lbrule-http]
 }
