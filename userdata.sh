@@ -36,6 +36,6 @@ chown -R apache:apache /var/www/html
 
 # Configure wp-config.php with the database details
 sed -i -e "s/database_name_here/project-db/" /var/www/html/wp-config.php
-sed -i -e "s/username_here/mysqladminr/" /var/www/html/wp-config.php
+sed -i -e "s/username_here/adminuser/" /var/www/html/wp-config.php
 sed -i -e "s/password_here/H@ShiCORP!/" /var/www/html/wp-config.php
 

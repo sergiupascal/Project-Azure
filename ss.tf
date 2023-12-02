@@ -30,10 +30,10 @@ resource "azurerm_lb_probe" "http" {
   name                = "lb-probe-http"
   loadbalancer_id     = azurerm_lb.project-lb.id
   port                = 80
-  protocol            = "Http"
-  request_path        = "/index.html"
-  number_of_probes    = 3
-  interval_in_seconds = 5
+  #protocol            = "Http"
+  #request_path        = "/index.html"
+  #number_of_probes    = 3
+  #interval_in_seconds = 5
 }
 
 # Create Load Balancer  Probe  SSH
@@ -107,11 +107,11 @@ resource "azurerm_linux_virtual_machine_scale_set" "project-vmss" {
   sku                             = "Standard_D2S_v3"
   instances                       = 2
   admin_username                  = "adminuser"
-  admin_password                  = "P@ssw0rd1234!"
+  admin_password                  = "H@ShiCORP!"
   disable_password_authentication = false
   custom_data                     = filebase64("userdata.sh")
   health_probe_id                 = azurerm_lb_probe.http.id
-  upgrade_mode                    = "Rolling"
+  #upgrade_mode                    = "Rolling"
 
   source_image_reference {
     publisher = "OpenLogic"
@@ -138,12 +138,12 @@ resource "azurerm_linux_virtual_machine_scale_set" "project-vmss" {
     }
   }
 
-  rolling_upgrade_policy {
-    max_batch_instance_percent              = 21
-    max_unhealthy_instance_percent          = 22
-    max_unhealthy_upgraded_instance_percent = 23
-    pause_time_between_batches              = "PT30S"
-  }
-
-  depends_on = [azurerm_lb_rule.lbrule-http]
+  #rolling_upgrade_policy {
+  #  max_batch_instance_percent              = 21
+  #  max_unhealthy_instance_percent          = 22
+  #  max_unhealthy_upgraded_instance_percent = 23
+  #  pause_time_between_batches              = "PT30S"
+  #}
+#
+ # depends_on = [azurerm_lb_rule.lbrule-http]
 }

@@ -11,10 +11,10 @@ resource "azurerm_mysql_server" "projectwordpress" {
   location            = azurerm_resource_group.projectazure.location
   resource_group_name = azurerm_resource_group.projectazure.name
 
-  administrator_login          = "mysqladmin"
+  administrator_login          = "adminuser"
   administrator_login_password = "H@ShiCORP!"
 
-  sku_name   = "B_Gen5_2"
+  sku_name   = "B_Gen5_1"
   storage_mb = 5120
   version    = "5.7"
 
