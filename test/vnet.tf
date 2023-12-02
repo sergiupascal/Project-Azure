@@ -87,36 +87,6 @@ resource "azurerm_network_security_rule" "allow_http" {
   destination_address_prefix  = "*"
 }
 
-# Allow inbound MySQL (port 3306) traffic
-resource "azurerm_network_security_rule" "allow_mysql" {
-  name                        = "allow-mysql"
-  priority                    = 1002
-  direction                   = "Inbound"
-  resource_group_name         = azurerm_resource_group.projectazure.name
-  network_security_group_name = azurerm_network_security_group.project-nsg.name
-  access                      = "Allow"
-  protocol                    = "Tcp"
-  source_port_range           = "*"
-  destination_port_range      = "3306"
-  source_address_prefix       = "*"
-  destination_address_prefix  = "*"
-}
-
-# Allow inbound HTTPS (port 443) traffic
-resource "azurerm_network_security_rule" "allow_https" {
-  name                        = "allow-https"
-  priority                    = 1003
-  direction                   = "Inbound"
-  resource_group_name         = azurerm_resource_group.projectazure.name
-  network_security_group_name = azurerm_network_security_group.project-nsg.name
-  access                      = "Allow"
-  protocol                    = "Tcp"
-  source_port_range           = "*"
-  destination_port_range      = "443"
-  source_address_prefix       = "*"
-  destination_address_prefix  = "*"
-}
-
 # Network Security Group & Subnet #3 Association
 resource "azurerm_subnet_network_security_group_association" "project-nsg-sub" {
   subnet_id                 = azurerm_subnet.subnet3.id
