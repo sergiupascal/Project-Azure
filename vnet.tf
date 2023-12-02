@@ -57,7 +57,7 @@ resource "azurerm_network_security_group" "project-nsg" {
   resource_group_name = azurerm_resource_group.projectazure.name
 }
 
-# Allow inbound SSH (port 22) traffic
+# Create network security rule to allow inbound SSH (port 22) traffic
 resource "azurerm_network_security_rule" "allow_ssh" {
   name                        = "allow-ssh"
   priority                    = 1001
@@ -72,7 +72,7 @@ resource "azurerm_network_security_rule" "allow_ssh" {
   destination_address_prefix  = "*"
 }
 
-# Allow inbound HTTP (port 80) traffic
+# Create network security rule to allow inbound HTTP (port 80) traffic
 resource "azurerm_network_security_rule" "allow_http" {
   name                        = "allow-http"
   priority                    = 1004
@@ -83,36 +83,6 @@ resource "azurerm_network_security_rule" "allow_http" {
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "80"
-  source_address_prefix       = "*"
-  destination_address_prefix  = "*"
-}
-
-# Allow inbound MySQL (port 3306) traffic
-resource "azurerm_network_security_rule" "allow_mysql" {
-  name                        = "allow-mysql"
-  priority                    = 1002
-  direction                   = "Inbound"
-  resource_group_name         = azurerm_resource_group.projectazure.name
-  network_security_group_name = azurerm_network_security_group.project-nsg.name
-  access                      = "Allow"
-  protocol                    = "Tcp"
-  source_port_range           = "*"
-  destination_port_range      = "3306"
-  source_address_prefix       = "*"
-  destination_address_prefix  = "*"
-}
-
-# Allow inbound HTTPS (port 443) traffic
-resource "azurerm_network_security_rule" "allow_https" {
-  name                        = "allow-https"
-  priority                    = 1003
-  direction                   = "Inbound"
-  resource_group_name         = azurerm_resource_group.projectazure.name
-  network_security_group_name = azurerm_network_security_group.project-nsg.name
-  access                      = "Allow"
-  protocol                    = "Tcp"
-  source_port_range           = "*"
-  destination_port_range      = "443"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
 }
